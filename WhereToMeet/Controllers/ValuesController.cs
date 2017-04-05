@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WhereToMeet.Data;
 
 namespace WhereToMeet.Controllers
 {
@@ -13,7 +14,17 @@ namespace WhereToMeet.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            var dbContext = new ProgramDbContext();
+            
+                dbContext.Add<User>(
+                new User()
+                {
+                    Username = "bobbyjoe" + Guid.NewGuid().ToString(),
+                    Password = Guid.NewGuid().ToString()
+                });
+                dbContext.SaveChanges();
+                return dbContext.Users.Select(u => u.Username);
+            
         }
 
         // GET api/values/5
