@@ -8,9 +8,10 @@ using WhereToMeet.Database;
 namespace WhereToMeet.Migrations
 {
     [DbContext(typeof(ProgramDbContext))]
-    partial class ProgramDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170411134834_Email champ")]
+    partial class Emailchamp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");

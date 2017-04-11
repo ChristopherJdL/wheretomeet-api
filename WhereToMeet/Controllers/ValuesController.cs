@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WhereToMeet.Data;
+using WhereToMeet.Database;
 
 namespace WhereToMeet.Controllers
 {
@@ -16,14 +16,8 @@ namespace WhereToMeet.Controllers
         {
             var dbContext = new ProgramDbContext();
             
-                dbContext.Add<User>(
-                new User()
-                {
-                    Username = "bobbyjoe" + Guid.NewGuid().ToString(),
-                    Password = Guid.NewGuid().ToString()
-                });
-                dbContext.SaveChanges();
-                return dbContext.Users.Select(u => u.Username);
+            dbContext.SaveChanges();
+            return dbContext.Users.Select(u => u.Username);
             
         }
 
