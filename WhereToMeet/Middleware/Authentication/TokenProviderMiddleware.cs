@@ -13,6 +13,7 @@ namespace WhereToMeet.Middleware.Authentication
 {
     public class TokenProviderMiddleware
     {
+        //TODO: Documentation in markdown
         private readonly RequestDelegate _next;
         private readonly TokenProviderOptions _options;
         public const string UserIdRegisteredClaimName = "userid";
