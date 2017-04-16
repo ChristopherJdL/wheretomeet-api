@@ -23,9 +23,9 @@ The parameters are:
 | email           | The email of the user.    |
 
 ### Return value ###
-*If success:*
+##### If success: 
 Returns code `200` (OK).
-*If failure*
+##### If failure: 
 Returns code `400` (Bad Request). In this case, the request is not valid.
 Returns an error message.
 
@@ -46,7 +46,7 @@ The parameters are:
 | password        | The password of the user. |
 
 ### Return value ###
-####If success:####
+##### If success: 
 Returns code `200` (OK).
 The return value is a token, that should be passed through the Authorization HTTP header, with the Bearer scheme.
 
@@ -57,7 +57,7 @@ The return value is a token, that should be passed through the Authorization HTT
 
 ```
 
-####If failure ####
+##### If failure: 
 
 Returns code `400` (Bad Request). In this case, the user is not found, or the request is not valid.
 Returns an error message.
