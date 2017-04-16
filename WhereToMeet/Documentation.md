@@ -46,7 +46,7 @@ The parameters are:
 | password        | The password of the user. |
 
 ### Return value ###
-*If success:*
+#####If success:#####
 Returns code `200` (OK).
 The return value is a token, that should be passed through the Authorization HTTP header, with the Bearer scheme.
 
@@ -54,13 +54,14 @@ The return value is a token, that should be passed through the Authorization HTT
 {
 	"appToken": "iTSBE1V4kNke1w0SmuY7EQkfE8lmuuBm28GoekgD2ZmtqTDQFV8K96gccfoYqmcTxT6rs0JDj5THq5oNXMARA8jRgEvwYN7D1F9"
 }
-*If failure*
+
+```
+
+#####If failure*#####
 
 Returns code `400` (Bad Request). In this case, the user is not found, or the request is not valid.
 Returns an error message.
 
-
-```
 #### Usage of the token (with Loopj Async Http): ####
 
 ```java
