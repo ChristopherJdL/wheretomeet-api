@@ -7,7 +7,7 @@ The parameters are given via query parameters (Request Parameters).
 
 ## Register ##
 ### Query ###
-The Registration is performed using:
+The Registration (Join) is performed using:
 
 | *Route*  | /api/register|
 |----------|--------------|
@@ -23,9 +23,11 @@ The parameters are:
 | email           | The email of the user.    |
 
 ### Return value ###
-*If success:*
+### If success:
+
 Returns code `200` (OK).
-*If failure*
+### If failure:
+
 Returns code `400` (Bad Request). In this case, the request is not valid.
 Returns an error message.
 
@@ -33,11 +35,12 @@ Returns an error message.
 ### Query ###
 The Log In is performed using:
 
-| *Route*  | /api/login |
-|----------|------------|
-| *Method* | GET        |
+| *Route*  | `/api/login` |
+|----------|--------------|
+| *Method* | GET          |
 
 To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/login"`.
+
 The parameters are:
 
 | *Parameter name*|  *Explanation*            |
@@ -46,7 +49,8 @@ The parameters are:
 | password        | The password of the user. |
 
 ### Return value ###
-####If success:####
+#### If success: ####
+
 Returns code `200` (OK).
 The return value is a token, that should be passed through the Authorization HTTP header, with the Bearer scheme.
 
@@ -57,7 +61,7 @@ The return value is a token, that should be passed through the Authorization HTT
 
 ```
 
-####If failure ####
+#### If failure ####
 
 Returns code `400` (Bad Request). In this case, the user is not found, or the request is not valid.
 Returns an error message.
@@ -67,5 +71,37 @@ Returns an error message.
 ```java
     client.addHeader("Authorization", "Bearer " + appToken);
 ```
-`client` being the instance of the HttpClient.
 
+The variable `client` is the instance of the AsyncHttpClient.
+
+## Values (for testing querying values) ##
+### Query ###
+The Log In is performed using:
+
+| *Route*  | `/api/values` |
+|----------|--------------|
+| *Method* | GET          |
+
+To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/login"`.
+
+There are no parameters given.
+
+### Return value ###
+#### If success: ####
+
+Returns code `200` (OK).
+The return value is a list of string values.
+
+```json
+[
+	'bonjour',
+	'je',
+	'suis',
+	'de France'
+]
+
+```
+
+#### If failure ####
+
+Undefined behaviour.
