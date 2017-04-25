@@ -1,12 +1,12 @@
 ﻿# Documentation of Where To Meet? API #
 
-Welcome to this documentation.
-This documentation will explain how to use the API of Where to Meet?, function by function
-The URL of the API (referred as *URL_API*) is: [to be created]
-The parameters are given via query parameters (Request Parameters).
+Welcome to this documentation :raised_hands: !
+:arrow_right: This documentation will explain how to use the API of Where to Meet?, function by function, and with emoji :blush:
+:arrow_right: The URL of the API (referred as *URL_API*) is: [to be created]
+:arrow_right: The parameters are given via query parameters (Request Parameters).
 
 ## Register ##
-### Query ###
+### Query :information_desk_person: ###
 The Registration (Join) is performed using:
 
 | *Route*  | /api/register|
@@ -22,15 +22,15 @@ The parameters are:
 | password        | The password of the user. |
 | email           | The email of the user.    |
 
-### Return value ###
-##### If success: 
+### Return value :heart_eyes_cat: ###
+##### If success :+1: : 
 Returns code `200` (OK).
-##### If failure: 
+##### If failure :-1:  : 
 Returns code `400` (Bad Request). In this case, the request is not valid.
 Returns an error message.
 
 ## Log In ##
-### Query ###
+### Query :information_desk_person: ###
 The Log In is performed using:
 
 | *Route*  | `/api/login` |
@@ -46,8 +46,8 @@ The parameters are:
 | username        | The username of the user. |
 | password        | The password of the user. |
 
-### Return value ###
-##### If success: 
+### Return value :heart_eyes_cat: ###
+##### If success :+1: : 
 Returns code `200` (OK).
 The return value is a token, that should be passed through the Authorization HTTP header, with the Bearer scheme.
 
@@ -58,12 +58,12 @@ The return value is a token, that should be passed through the Authorization HTT
 
 ```
 
-##### If failure: 
+##### If failure :-1: : 
 
 Returns code `400` (Bad Request). In this case, the user is not found, or the request is not valid.
 Returns an error message.
 
-#### Usage of the token ####
+#### :milky_way: Usage of the token :smile: ####
 
 The token should be passed through the Authorization HTTP header, with the Bearer scheme.
 
@@ -77,9 +77,9 @@ The variable `client` is the instance of the AsyncHttpClient.
 
 ## Values (for testing querying values) ##
 
-This route uses [the authentication process described here](https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md#usage-of-the-token-with-loopj-async-http).
+This route uses [the authentication process described here](https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md#usage-of-the-token).
 
-### Query ###
+### Query :information_desk_person: ###
 The Log In is performed using:
 
 | *Route*  | `/api/values` |
@@ -90,8 +90,8 @@ To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "
 
 There are no parameters given.
 
-### Return value ###
-#### If success: ####
+### Return value :heart_eyes_cat: ###
+#### If success :+1: : ####
 
 Returns code `200` (OK).
 The return value is a list of string values.
@@ -106,6 +106,6 @@ The return value is a list of string values.
 
 ```
 
-#### If failure ####
+#### If failure :-1:  : ####
 
 Undefined behaviour.
