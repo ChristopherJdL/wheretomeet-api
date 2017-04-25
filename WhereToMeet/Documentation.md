@@ -101,10 +101,10 @@ The return value is a list of string values.
 
 ```json
 [
-	"bonjour",
-	"je",
-	"suis",
-	"de France"
+	"안녕하세요",
+	"저는",
+	"프랑스",
+	"인입니다"
 ]
 
 ```
