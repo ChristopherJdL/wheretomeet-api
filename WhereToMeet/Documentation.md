@@ -89,7 +89,7 @@ The Log In is performed using:
 |----------|---------------|
 | *Method* | GET           |
 
-To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/login"`.
+To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/values"`.
 
 There are no parameters given.
 
