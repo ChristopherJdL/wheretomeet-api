@@ -4,7 +4,7 @@ Welcome to this documentation :raised_hands: !
 
 :arrow_right: This documentation will explain how to use the API of Where to Meet?, function by function, and with emoji :blush: !
 
-:arrow_right: The URL of the API (referred as *URL_API*) is: [to be created]
+:arrow_right: The URL of the API (referred as *URL_API*) is: http://wheretomeet-api.azurewebsites.net/
 
 :arrow_right: The parameters are given via query parameters (Request Parameters).
 
