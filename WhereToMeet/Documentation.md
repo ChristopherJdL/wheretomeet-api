@@ -63,9 +63,12 @@ The return value is a token, that should be passed through the Authorization HTT
 Returns code `400` (Bad Request). In this case, the user is not found, or the request is not valid.
 Returns an error message.
 
-#### Usage of the token (with Loopj Async Http): ####
+#### Usage of the token ####
 
 The token should be passed through the Authorization HTTP header, with the Bearer scheme.
+
+##### With loopj Async Http library:
+
 ```java
     client.addHeader("Authorization", "Bearer " + appToken);
 ```
@@ -74,14 +77,14 @@ The variable `client` is the instance of the AsyncHttpClient.
 
 ## Values (for testing querying values) ##
 
-This route uses the authentication process described here.
+This route uses (the authentication process described here)[https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md#usage-of-the-token-with-loopj-async-http].
 
 ### Query ###
 The Log In is performed using:
 
 | *Route*  | `/api/values` |
-|----------|--------------|
-| *Method* | GET          |
+|----------|---------------|
+| *Method* | GET           |
 
 To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/login"`.
 
