@@ -80,7 +80,7 @@ The variable `client` is the instance of the AsyncHttpClient.
 
 ## Values (for testing querying values) ##
 
-This route uses [the authentication process described here](https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md#usage-of-the-token).
+This route uses [the authentication process described here](https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md#milky_way-usage-of-the-token-smile).
 
 ### Query :information_desk_person: ###
 The Log In is performed using:
