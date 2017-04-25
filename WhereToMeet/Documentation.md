@@ -65,6 +65,7 @@ Returns an error message.
 
 #### Usage of the token (with Loopj Async Http): ####
 
+The token should be passed through the Authorization HTTP header, with the Bearer scheme.
 ```java
     client.addHeader("Authorization", "Bearer " + appToken);
 ```
@@ -72,6 +73,9 @@ Returns an error message.
 The variable `client` is the instance of the AsyncHttpClient.
 
 ## Values (for testing querying values) ##
+
+This route uses the authentication process described here.
+
 ### Query ###
 The Log In is performed using:
 
@@ -91,10 +95,10 @@ The return value is a list of string values.
 
 ```json
 [
-	'bonjour',
-	'je',
-	'suis',
-	'de France'
+	"bonjour",
+	"je",
+	"suis",
+	"de France"
 ]
 
 ```
