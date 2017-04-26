@@ -70,9 +70,9 @@ Returns an error message.
 
 The token should be passed through the *Authorization HTTP Header*, with the *Bearer* scheme.
 
-| *Header Key*      | Authorization  |
-|-------------------|----------------|
-| *Header Value*    | POST           |
+| *Header Key*      | Authorization         |
+|-------------------|-----------------------|
+| *Header Value*    | `"Bearer " + appToken`|
 
 *If the authentication fails :thumbsdown: *, the query will return code `401` (Unauthorized).
 
