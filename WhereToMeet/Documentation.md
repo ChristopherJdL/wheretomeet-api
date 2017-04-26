@@ -74,7 +74,7 @@ The token should be passed through the *Authorization HTTP Header*, with the *Be
 |-------------------|-----------------------|
 | *Header Value*    | `"Bearer " + appToken`|
 
-*If the authentication fails :thumbsdown: *, the query will return code `401` (Unauthorized).
+*If the authentication fails* :thumbsdown:, the query will return code `401` (Unauthorized).
 
 ##### Example with loopj Async Http library:
 
