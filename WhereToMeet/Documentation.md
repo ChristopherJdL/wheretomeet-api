@@ -80,10 +80,11 @@ The variable `client` is the instance of the AsyncHttpClient.
 
 ## Values (for testing querying values) ##
 
+### Authentication
 This route uses [the authentication process described here](https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md#milky_way-usage-of-the-token-smile).
 
 ### Query :information_desk_person: ###
-The Log In is performed using:
+Get values using:
 
 | *Route*  | `/api/values` |
 |----------|---------------|
@@ -103,8 +104,8 @@ The return value is a list of string values.
 [
 	"안녕하세요",
 	"저는",
-	"프랑스",
-	"인입니다"
+	"프랑스인",
+	"입니다"
 ]
 
 ```
