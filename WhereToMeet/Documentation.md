@@ -12,9 +12,9 @@ Welcome to this documentation :raised_hands: !
 ### Query :information_desk_person: ###
 The Registration (Join) is performed using:
 
-| *Route*  | /api/register|
-|----------|--------------|
-| *Method* | POST         |
+| *Route*  | `/api/register`|
+|----------|----------------|
+| *Method* | POST           |
 
 To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/register"`.
 The parameters are:
@@ -68,9 +68,15 @@ Returns an error message.
 
 #### :milky_way: Usage of the token :smile: ####
 
-The token should be passed through the Authorization HTTP header, with the Bearer scheme.
+The token should be passed through the *Authorization HTTP Header*, with the *Bearer* scheme.
 
-##### With loopj Async Http library:
+| *Header Key*      | Authorization  |
+|-------------------|----------------|
+| *Header Value*    | POST           |
+
+*If the authentication fails :thumbsdown: *, the query will return code `401` (Unauthorized).
+
+##### Example with loopj Async Http library:
 
 ```java
     client.addHeader("Authorization", "Bearer " + appToken);
