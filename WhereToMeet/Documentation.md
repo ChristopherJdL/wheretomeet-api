@@ -12,9 +12,9 @@ Welcome to this documentation :raised_hands: !
 ### Query :information_desk_person: ###
 The Registration (Join) is performed using:
 
-| *Route*  | /api/register|
-|----------|--------------|
-| *Method* | POST         |
+| *Route*  | `/api/register`|
+|----------|----------------|
+| *Method* | POST           |
 
 To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/register"`.
 The parameters are:
@@ -68,9 +68,15 @@ Returns an error message.
 
 #### :milky_way: Usage of the token :smile: ####
 
-The token should be passed through the Authorization HTTP header, with the Bearer scheme.
+The token should be passed through the *Authorization HTTP Header*, with the *Bearer* scheme.
 
-##### With loopj Async Http library:
+| *Header Key*      | Authorization         |
+|-------------------|-----------------------|
+| *Header Value*    | `"Bearer " + appToken`|
+
+*If the authentication fails* :thumbsdown:, the query will return code `401` (Unauthorized).
+
+##### Example with loopj Async Http library:
 
 ```java
     client.addHeader("Authorization", "Bearer " + appToken);
@@ -80,10 +86,11 @@ The variable `client` is the instance of the AsyncHttpClient.
 
 ## Values (for testing querying values) ##
 
+### Authentication
 This route uses [the authentication process described here](https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md#milky_way-usage-of-the-token-smile).
 
 ### Query :information_desk_person: ###
-The Log In is performed using:
+Get values using:
 
 | *Route*  | `/api/values` |
 |----------|---------------|
@@ -103,8 +110,8 @@ The return value is a list of string values.
 [
 	"안녕하세요",
 	"저는",
-	"프랑스",
-	"인입니다"
+	"프랑스인",
+	"입니다"
 ]
 
 ```
