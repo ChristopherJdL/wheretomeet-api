@@ -19,7 +19,6 @@ namespace Algorithm
             foreach(GeoCoordinates item in geoCoordinates) {
                 sumX+=item.x;
                 sumY+=item.y;
-                num
             }
 
             GeoCoordinates averageCoordinates = new GeoCoordinates();
