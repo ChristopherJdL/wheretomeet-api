@@ -8,9 +8,10 @@ using WhereToMeet.Database;
 namespace WhereToMeet.Migrations
 {
     [DbContext(typeof(ProgramDbContext))]
-    partial class ProgramDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170510082901_Frienships.Attempt.4")]
+    partial class FrienshipsAttempt4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");

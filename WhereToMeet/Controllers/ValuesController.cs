@@ -27,7 +27,9 @@ namespace WhereToMeet.Controllers
         [HttpGet("{id}")]
         public int Get(int id)
         {
-            return id + 10;
+            var dbContext = new ProgramDbContext();
+            
+            return dbContext.Users.First().Id;
         }
 
         // POST api/values

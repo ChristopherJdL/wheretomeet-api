@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Options;
 using WhereToMeet.Middleware.Authentication;
+using System.IO;
 
 namespace WhereToMeet
 {
@@ -86,6 +87,8 @@ namespace WhereToMeet
             loggerFactory.AddDebug();
             this.ConfigureAuthentication(app);
             app.UseMvc();
+            app.UseStaticFiles();
+            app.UseDeveloperExceptionPage();
         }
         
     }
