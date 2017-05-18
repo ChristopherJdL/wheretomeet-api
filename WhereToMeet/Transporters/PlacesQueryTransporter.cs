@@ -10,7 +10,7 @@ namespace WhereToMeet.Transporters.Input
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        public int AvailaibleMinutes { get; set; }
+        public int Radius { get; set; }
         public IEnumerable<string>  PlacesTypes { get; set; }
     }
 }

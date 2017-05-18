@@ -10,7 +10,7 @@ using System.Globalization;
 using WhereToMeet.Transporters.Output.GooglePlaces;
 using Newtonsoft.Json;
 using WhereToMeet.Transporters;
-using WheretoMeet.Services.PlacesProviders;
+using WhereToMeet.Services.PlacesProviders;
 
 namespace WhereToMeet.Services.PlacesProviders
 {
@@ -29,7 +29,7 @@ namespace WhereToMeet.Services.PlacesProviders
         {
             this.Client = new HttpClient()
                           {
-                            BaseAddress = new Uri(configuration["GeoDataServices:GooglePlaces:Url"])
+                            BaseAddress = new Uri(configuration["GoogleServices:GooglePlacesUrl"])
                           };
             this.Configuration = configuration;
         }
@@ -47,17 +47,19 @@ namespace WhereToMeet.Services.PlacesProviders
 
         private async Task<GooglePlacesResponse> FireGooglePlacesQueryAsync(string placeType, PlacesQueryTransporter query)
         {
-            string latitudeString = query.Latitude.ToString(CultureInfo.InvariantCulture);
-            string longitudeString = query.Longitude.ToString(CultureInfo.InvariantCulture);
-            string radiusString = 500.ToString(CultureInfo.InvariantCulture);
+            string latitudeString = Math.Round(query.Latitude, 7).ToString(CultureInfo.InvariantCulture);
+            string longitudeString = Math.Round(query.Longitude, 7).ToString(CultureInfo.InvariantCulture);
+            var keykey = Configuration["GoogleServices:GoogleServicesKey"];
+            string radiusString = query.Radius.ToString();
             var parameters = new FormUrlEncodedContent(new[]
             {
-                new KeyValuePair<string, string>("key", Configuration["GeoDataServices:GooglePlaces:ApiKey"]),
+                new KeyValuePair<string, string>("key", keykey),
                 new KeyValuePair<string, string>("location", $"{latitudeString},{longitudeString}"),
                 new KeyValuePair<string, string>("radius", radiusString),
                 new KeyValuePair<string, string>("type", placeType)
             });
-            var response = await this.Client.GetAsync($"?{await parameters.ReadAsStringAsync()}");
+            var queryString = await parameters.ReadAsStringAsync();
+            var response = await this.Client.GetAsync($"?location={ "37.532600"},{"127.024612"}&radius=500&type=restaurant&key=" + keykey);
             if (response.IsSuccessStatusCode)
             {
                 var gPlaceTransporter = JsonConvert.DeserializeObject<GooglePlacesResponse>(await response.Content.ReadAsStringAsync());

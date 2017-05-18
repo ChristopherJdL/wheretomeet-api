@@ -11,6 +11,11 @@ namespace WhereToMeet.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        public ProgramDbContext DbContext { get; set; }
+        public ValuesController(ProgramDbContext dbContext)
+        {
+            this.DbContext = dbContext;
+        }
         // GET api/values
         [HttpGet]
         [Authorize]
@@ -27,9 +32,8 @@ namespace WhereToMeet.Controllers
         [HttpGet("{id}")]
         public int Get(int id)
         {
-            var dbContext = new ProgramDbContext();
             
-            return dbContext.Users.First().Id;
+            return this.DbContext.Users.First().Id;
         }
 
         // POST api/values

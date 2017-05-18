@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WhereToMeet.Transporters.Output;
 
-namespace WheretoMeet.Services.PlacesProviders
+namespace WhereToMeet.Services.PlacesProviders
 {
     public interface IPlacesProvider
     {

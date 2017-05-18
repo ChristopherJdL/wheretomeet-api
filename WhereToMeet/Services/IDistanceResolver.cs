@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WheretoMeet.Services
+namespace WhereToMeet.Services
 {
     public interface IDistanceResolver
     {

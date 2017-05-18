@@ -6,9 +6,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using WhereToMeet.Transporters;
 using Newtonsoft.Json;
-using WhereToMeet.Transporters;
 using WhereToMeet.Transporters.Output.GoogleDistanceMatrix;
-using WheretoMeet.Services;
+using WhereToMeet.Services;
 
 namespace WhereToMeet.Services
 {
@@ -27,7 +26,7 @@ namespace WhereToMeet.Services
         {
             this.Client = new HttpClient()
             {
-                BaseAddress = new Uri(configuration["GeoDataServices:GoogleDistanceMatrix:Url"])
+                BaseAddress = new Uri(configuration["GoogleServices:GoogleDistanceMatrixUrl"])
             };
             this.Configuration = configuration;
         }
@@ -44,9 +43,10 @@ namespace WhereToMeet.Services
         public async Task<int> ResolveDuration(GeoCoordinatesTransporter origin, GeoCoordinatesTransporter destination)
         {
             var parameters = new FormUrlEncodedContent(new[] {
+                new KeyValuePair<string, string>("key", Configuration["GoogleServices:GoogleServicesKey"] ),
                 new KeyValuePair<string, string>("origins", origin.ToString()),
                 new KeyValuePair<string, string>("destinations", destination.ToString()),
-                new KeyValuePair<string, string>("mode", Configuration["GeoDataServices:GoogleDistanceMatrix:TransportationMode"])
+                new KeyValuePair<string, string>("mode", "walking")
             });
             var response = await this.Client.GetAsync($"?{await parameters.ReadAsStringAsync()}");
             if (response.IsSuccessStatusCode)

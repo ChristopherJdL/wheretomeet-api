@@ -26,7 +26,7 @@ namespace WhereToMeet.Database
 
     public class ProgramDbContext : DbContext
     {
-        private const string ConnectionString = "Filename=./WhereToMeet.db";
+        private const string ConnectionString = "Data Source=WhereToMeet.db";
         public DbSet<User> Users { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)

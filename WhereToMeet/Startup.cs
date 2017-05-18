@@ -13,6 +13,8 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using WhereToMeet.Middleware.Authentication;
 using System.IO;
+using WhereToMeet.Services;
+using WhereToMeet.Services.PlacesProviders;
 
 namespace WhereToMeet
 {
@@ -36,6 +38,9 @@ namespace WhereToMeet
             // Add framework services.
             services.AddMvc();
             services.AddDbContext<ProgramDbContext>();
+            services.AddSingleton<IDistanceResolver, GoogleDistanceMatrixResolver>();
+            services.AddSingleton<IPlacesProvider, SimpleGooglePlacesProvider>();
+            services.AddSingleton<IConfigurationRoot>(this.Configuration);
         }
 
 
