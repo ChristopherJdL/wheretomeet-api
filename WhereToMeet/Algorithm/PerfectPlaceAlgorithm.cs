@@ -17,20 +17,51 @@ namespace WhereToMeet.Algorithm
         {
 
         }
+
+        //public GeoCoordinatesTransporter    ObtainAverageCoordinates(GeoCoordinatesTransporter[] geoCoordinates)
+        //{
+        //    double x = 0d;
+        //    double y = 0d;
+        //    double z = 0d;
+        //    geoCoordinates.Take(2).ToList().ForEach(g => x = x + (Math.Cos(g.Y) * Math.Cos(g.X)));
+        //    geoCoordinates.Take(2).ToList().ForEach(g => y = y + (Math.Cos(g.Y) * Math.Sin(g.X)));
+        //    geoCoordinates.Take(2).ToList().ForEach(g => z = z + (Math.Sin(g.Y)));
+        //    double N = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
+        //    double latitudeM = Math.Asin(z / N);
+        //    double longitudeM = 0;
+        //    if (x >= 0)
+        //        longitudeM = Math.Asin(y / N * Math.Cos(Math.Asin(z / N)));
+        //    else
+        //        longitudeM = Math.Sign(y) * (Math.PI - Math.Asin(Math.Abs(y) / N * Math.Cos(Math.Asin(z / N))));
+        //    return new GeoCoordinatesTransporter()
+        //    {
+        //        Y = latitudeM,
+        //        X = longitudeM
+        //    };
+        //}
+
         public async Task<PlaceTransporter> FindPerfectPlace(IPlacesProvider placeProvider, String[] placesTypes,
             IDistanceResolver distanceResolver, GeoCoordinatesTransporter[] geoCoordinates)
         {
-            double sumX = 0.0, sumY = 0.0;
+            double sumX = 0.0, sumY = 0.0, sumZ = 0.0;
             foreach (GeoCoordinatesTransporter item in geoCoordinates)
             {
-                sumX += item.X;
-                sumY += item.Y;
+                double x = Math.Sin(item.X * Math.PI / 180) * Math.Cos(item.Y * Math.PI / 180);
+                double y = Math.Sin(item.X * Math.PI / 180) * Math.Sin(item.Y * Math.PI / 180);
+                double z = Math.Cos(item.X * Math.PI / 180);
+                sumX += x;
+                sumY += y;
+                sumZ += z;
             }
+            double averageX = sumX / geoCoordinates.Length;
+            double averageY = sumY / geoCoordinates.Length;
+            double averageZ = sumZ / geoCoordinates.Length;
+            double r = Math.Sqrt(averageX * averageX + averageY * averageY + averageZ * averageZ);
 
             var averageCoordinates = new GeoCoordinatesTransporter();
-            averageCoordinates.X = sumX / geoCoordinates.Length;
-            averageCoordinates.Y = sumY / geoCoordinates.Length;
-
+            averageCoordinates.X = Math.Acos(averageZ / r) * 180 / Math.PI;
+            averageCoordinates.Y = Math.Acos(averageX / averageY) * 180 / Math.PI;
+            
             var candidatePlaces = await placeProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter
                                                                                                    {
                                                                                                      Latitude = averageCoordinates.Y,
@@ -40,7 +71,7 @@ namespace WhereToMeet.Algorithm
                                                                                                    });
             int minimumMinute = 0;
             PlaceTransporter finalPlace = null;
-            foreach (var item1 in candidatePlaces)
+            foreach (var item1 in candidatePlaces.Take(5))
             {
                 int minute = 0;
                 foreach (GeoCoordinatesTransporter item2 in geoCoordinates)

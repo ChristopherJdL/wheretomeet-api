@@ -47,8 +47,8 @@ namespace WhereToMeet.Services.PlacesProviders
 
         private async Task<GooglePlacesResponse> FireGooglePlacesQueryAsync(string placeType, PlacesQueryTransporter query)
         {
-            string latitudeString = Math.Round(query.Latitude, 7).ToString(CultureInfo.InvariantCulture);
-            string longitudeString = Math.Round(query.Longitude, 7).ToString(CultureInfo.InvariantCulture);
+            string latitudeString = query.Latitude.ToString(CultureInfo.InvariantCulture);
+            string longitudeString = query.Longitude.ToString(CultureInfo.InvariantCulture);
             var keykey = Configuration["GoogleServices:GoogleServicesKey"];
             string radiusString = query.Radius.ToString();
             var parameters = new FormUrlEncodedContent(new[]
@@ -59,7 +59,7 @@ namespace WhereToMeet.Services.PlacesProviders
                 new KeyValuePair<string, string>("type", placeType)
             });
             var queryString = await parameters.ReadAsStringAsync();
-            var response = await this.Client.GetAsync($"?location={ "37.532600"},{"127.024612"}&radius=500&type=restaurant&key=" + keykey);
+            var response = await this.Client.GetAsync($"?location={ latitudeString},{longitudeString}&radius=500&key=" + keykey);
             if (response.IsSuccessStatusCode)
             {
                 var gPlaceTransporter = JsonConvert.DeserializeObject<GooglePlacesResponse>(await response.Content.ReadAsStringAsync());

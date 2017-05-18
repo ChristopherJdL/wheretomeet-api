@@ -43,14 +43,14 @@ namespace WhereToMeet.Controllers
                 },
                 new GeoCoordinatesTransporter()
                 {
-                    X = 37.6172363,
-                    Y = 127.873248
+                    X = 37.5588440,
+                    Y = 126.9198570
                 },
 
                 new GeoCoordinatesTransporter()
                 {
-                    X = 37.9960697,
-                    Y = 127.88325
+                    X = 37.5593203,
+                    Y = 126.9229898
                 }
             };
         }
