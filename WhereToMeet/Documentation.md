@@ -38,7 +38,7 @@ The Log In is performed using:
 
 | *Route*  | `/api/login` |
 |----------|--------------|
-| *Method* | GET          |
+| *Method* | POST         |
 
 To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/login"`.
 
