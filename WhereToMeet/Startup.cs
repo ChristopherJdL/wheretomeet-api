@@ -15,6 +15,7 @@ using WhereToMeet.Middleware.Authentication;
 using System.IO;
 using WhereToMeet.Services;
 using WhereToMeet.Services.PlacesProviders;
+using Microsoft.EntityFrameworkCore;
 
 namespace WhereToMeet
 {
@@ -41,6 +42,10 @@ namespace WhereToMeet
             services.AddSingleton<IDistanceResolver, GoogleDistanceMatrixResolver>();
             services.AddSingleton<IPlacesProvider, SimpleGooglePlacesProvider>();
             services.AddSingleton<IConfigurationRoot>(this.Configuration);
+            using (var dbContext = new ProgramDbContext())
+            {
+                dbContext.Database.Migrate();
+            }
         }
 
 

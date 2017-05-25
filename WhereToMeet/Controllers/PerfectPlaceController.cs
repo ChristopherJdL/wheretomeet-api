@@ -38,19 +38,19 @@ namespace WhereToMeet.Controllers
             {
                 new GeoCoordinatesTransporter()
                 {
-                    X =  37.5172363,
-                    Y = 127.0473248
+                    Y =  37.532600,
+                    X = 127.024612
                 },
                 new GeoCoordinatesTransporter()
                 {
-                    X = 37.5588440,
-                    Y = 126.9198570
+                    Y = 37.5588440,
+                    X = 126.9198570
                 },
 
                 new GeoCoordinatesTransporter()
                 {
-                    X = 37.5593203,
-                    Y = 126.9229898
+                    Y = 37.5593203,
+                    X = 126.9229898
                 }
             };
         }

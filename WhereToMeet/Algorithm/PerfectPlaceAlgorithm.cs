@@ -40,7 +40,21 @@ namespace WhereToMeet.Algorithm
         //    };
         //}
 
-        public async Task<PlaceTransporter> FindPerfectPlace(IPlacesProvider placeProvider, String[] placesTypes,
+        public async Task<PlaceTransporter> DefaultBehaviour(GeoCoordinatesTransporter[] geoCoordinates, IPlacesProvider placesProvider, IEnumerable<string> placesTypes)
+        {
+            var foundPlaces = await placesProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter()
+            {
+                Latitude = geoCoordinates.First().Y,
+                Longitude = geoCoordinates.First().X,
+                PlacesTypes = placesTypes,
+                Radius = 500
+            });
+            if (foundPlaces.Any())
+                return foundPlaces.First();
+            return null;
+        }
+
+        public async Task<PlaceTransporter> FindPerfectPlace(IPlacesProvider placesProvider, String[] placesTypes,
             IDistanceResolver distanceResolver, GeoCoordinatesTransporter[] geoCoordinates)
         {
             double sumX = 0.0, sumY = 0.0, sumZ = 0.0;
@@ -62,7 +76,7 @@ namespace WhereToMeet.Algorithm
             averageCoordinates.X = Math.Acos(averageZ / r) * 180 / Math.PI;
             averageCoordinates.Y = Math.Acos(averageX / averageY) * 180 / Math.PI;
             
-            var candidatePlaces = await placeProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter
+            var candidatePlaces = await placesProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter
                                                                                                    {
                                                                                                      Latitude = averageCoordinates.Y,
                                                                                                      Longitude = averageCoordinates.X,
@@ -84,7 +98,8 @@ namespace WhereToMeet.Algorithm
                     finalPlace = item1;
                 }
             }
-
+            if (finalPlace == null)
+                finalPlace = await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes);
             return finalPlace;
         }
     }

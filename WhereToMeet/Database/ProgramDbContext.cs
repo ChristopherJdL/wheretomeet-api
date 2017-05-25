@@ -13,6 +13,8 @@ namespace WhereToMeet.Database
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public double LastKnownLatitude { get; set; }
+        public double LastKnownLongitude { get; set; }
     }
 
     public class Friendship

@@ -28,7 +28,6 @@ namespace WhereToMeet.Controllers
             return new OkObjectResult(friendsOfThisUser);
         }
 
-
         // POST Set default friends
         [HttpPost]
         public IActionResult Post()

@@ -87,7 +87,7 @@ The variable `client` is the instance of the AsyncHttpClient.
 ## Values (for testing querying values) ##
 
 ### Authentication
-This route uses [the authentication process described here](https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md#milky_way-usage-of-the-token-smile).
+This route uses [the authentication process described here](#milky_way-usage-of-the-token-smile).
 
 ### Query :information_desk_person: ###
 Get values using:
@@ -119,3 +119,39 @@ The return value is a list of string values.
 #### If failure :-1:  : ####
 
 Undefined behaviour.
+
+
+## :warning: Location (To inform the server on the user's location) ##
+
+> :warning: Not working nor deployed yet. :rabbit:
+
+### Authentication
+This route uses [the authentication process described here](#milky_way-usage-of-the-token-smile).
+
+### Query :information_desk_person: ###
+Update the Location using:
+
+| *Route*  | `/api/location` |
+|----------|-----------------|
+| *Method* | PUT             |
+
+To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/location"`.
+
+The parameters are required:
+
+| *Parameter name*|  *Explanation*                                            |
+|-----------------|-----------------------------------------------------------|
+| latitude        | Cartesian coordinate of the user on earth. == Y position. |
+| longitude       | Cartesian coordinate of the user on earth. == X position. |
+
+> NB: The parameters must be formatted in the UK notation, for example: 32.69862547
+
+### Return value :heart_eyes_cat: ###
+#### If success :+1: : ####
+
+Returns code `200` (OK).
+No return value.
+
+#### If failure :-1:  : ####
+
+Returns code `400` (Bad Request).
