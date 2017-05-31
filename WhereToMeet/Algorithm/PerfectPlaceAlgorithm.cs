@@ -40,18 +40,17 @@ namespace WhereToMeet.Algorithm
         //    };
         //}
 
-        public async Task<PlaceTransporter> DefaultBehaviour(GeoCoordinatesTransporter[] geoCoordinates, IPlacesProvider placesProvider, IEnumerable<string> placesTypes)
+        public async Task<PlaceTransporter> DefaultBehaviour(GeoCoordinatesTransporter[] geoCoordinates, IPlacesProvider placesProvider, IEnumerable<string> placesTypes, int radius)
         {
             var foundPlaces = await placesProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter()
             {
                 Latitude = geoCoordinates.First().Y,
                 Longitude = geoCoordinates.First().X,
                 PlacesTypes = placesTypes,
-                Radius = 500
+                Radius = this.radius
             });
-            if (foundPlaces.Any())
-                return foundPlaces.Last();
-            return null;
+            if(this.radius == 2000) return (foundPlaces.Any() ? foundPlaces.First() : null);
+            if(foundPlaces.Any()) return await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes, this.radius + 500);
         }
 
         public async Task<PlaceTransporter> FindPerfectPlace(IPlacesProvider placesProvider, String[] placesTypes,
@@ -99,7 +98,7 @@ namespace WhereToMeet.Algorithm
                 }
             }
             if (finalPlace == null)
-                finalPlace = await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes);
+                finalPlace = await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes, 1000);
             return finalPlace;
         }
     }
