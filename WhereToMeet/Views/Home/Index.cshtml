@@ -10,6 +10,8 @@
 
     <link rel="icon" type="image/png" href="iconapp.png" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
@@ -29,15 +31,75 @@ body
     height: 100%;
     background-attachment: fixed;
 }
-    #main
-    {
-        
+    #main {
         width: 100%;
         height: 100%;
         background-color: #ffd54f;
         background-repeat: repeat-x;
         background-attachment: fixed;
+        /* Section background anim */
+        background: linear-gradient(271deg, #7cb342, #ffd54f);
+        background-size: 400% 400%;
+        -webkit-animation: wheretomeet-gradient 14s ease infinite;
+        -moz-animation: wheretomeet-gradient 14s ease infinite;
+        -o-animation: wheretomeet-gradient 14s ease infinite;
+        animation: wheretomeet-gradient 14s ease infinite;
     }
+     @@-webkit-keyframes wheretomeet-gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @@-moz-keyframes wheretomeet-gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @@-o-keyframes wheretomeet-gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @@keyframes wheretomeet-gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
     .welcomeMessage
     {
         color: white;
@@ -73,6 +135,8 @@ body
         
         text-shadow: none;
     }
+
+
 </style>
 </head>
 <body id="main">
