@@ -8,6 +8,7 @@ Welcome to this documentation :raised_hands: !
 
 :arrow_right: The parameters are given via query parameters (Request Parameters).
 
+
 ## Register ##
 ### Query :information_desk_person: ###
 The Registration (Join) is performed using:
@@ -197,10 +198,10 @@ req.put("participants", participants);
 ### Return value :heart_eyes_cat: ###
 #### If success :+1: : ####
 
-Returns code `200` (OK) or 204 (No Content).
+Returns code `200` (OK) or `204` (No Content).
 Returns the Perfect Place.
 
-> :warning: :raised_hand: The Request can return code 204 if nothing was found. In this case, an error message should be displayed.
+> :warning: :raised_hand: This request __can return code `204`__ if nothing was found. In this case, an error message should be displayed.
 
 ```json
 {
@@ -240,6 +241,7 @@ No parameters are required.
 
 Returns code `200` (OK).
 
+The application returns the friends list.
 ```json
 [
   {

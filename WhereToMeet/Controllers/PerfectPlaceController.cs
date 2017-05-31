@@ -8,6 +8,8 @@ using WhereToMeet.Algorithm;
 using WhereToMeet.Services;
 using WhereToMeet.Services.PlacesProviders;
 using WhereToMeet.Database;
+using Microsoft.AspNetCore.Authorization;
+using WhereToMeet.Extensions;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,13 +39,14 @@ namespace WhereToMeet.Controllers
 
         IEnumerable<GeoCoordinatesTransporter> GetParticipantsCoordinates(int[] participantsIds)
         {
-            var friendsGeoData = participantsIds.Select(id => this.DbContext.Users.Where(user => user.Id == id)
+            var friendsGeoData = participantsIds.Select(id => this.DbContext.Users.Where(user => user.Id == id || user.Id == this.User.GetUserId())
             .Select(user => new GeoCoordinatesTransporter() {
                 X = user.LastKnownLongitude, Y = user.LastKnownLatitude
             }).FirstOrDefault());
             return friendsGeoData;
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get(PerfectPlaceQueryWrapper perfectPlaceQuery)
         {
             var participantsGeoCoordinates = this.GetParticipantsCoordinates(perfectPlaceQuery.Participants);

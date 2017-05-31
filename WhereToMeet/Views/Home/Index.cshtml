@@ -34,14 +34,14 @@ body
         
         width: 100%;
         height: 100%;
-        background-color: #fdcc52;
+        background-color: #ffd54f;
         background-repeat: repeat-x;
         background-attachment: fixed;
     }
     .welcomeMessage
     {
         color: white;
-        font-size: 180px;
+        font-size: 100px;
         font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         vertical-align: middle;
         position: relative;
@@ -64,15 +64,27 @@ body
     {
         text-shadow: initial;
         margin-left: 30%;
+        color: white;
+    }
+    .appName
+    {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color:#558b2f ;
+        
+        text-shadow: none;
     }
 </style>
 </head>
 <body id="main">
         <div class="welcomeMessage">
             <center><img style="border-radius:50%;height:300px;width:300px;" src="~/iconapp.png" alt="" /></center>
-            Welcome !
-    <p>This is the web API of the <span style="font-style:italic">Where to Meet?</span> project. To see the documentation, please click on that button:</p>
-            <a class="waves-effect waves-light btn btn-large green darken-4"
+            <center class="">Where To Meet<span style="font-style:italic">?</span></center>
+    <p>Welcome 😊. This is the web API of the <span style="font-style:italic">Where to Meet?</span> project. <br/>
+            This project shall be tested using the test profile described here:</p>
+            <a class="waves-effect waves-light btn btn-large amber darken-2"
+               href="https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Test_Profile.md"><i class="fa fa-github" aria-hidden="true"></i> Test Profile </a>
+    <p>To see the documentation, please click on that button:</p>
+            <a class="waves-effect waves-light btn btn-large light-green darken-2"
                href="https://github.com/ChristopherJdL/wheretomeet-server/blob/master/WhereToMeet/Documentation.md"><i class="fa fa-github" aria-hidden="true"></i> Documentation</a>
     </div>
 </body>
