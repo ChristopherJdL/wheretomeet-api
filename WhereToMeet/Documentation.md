@@ -190,7 +190,7 @@ participants.add(13);
 participants.add(91600);
 RequestParams req = new RequestParams();
 
-req.put("types", participants);
+req.put("participants", participants);
 
 ```
 
