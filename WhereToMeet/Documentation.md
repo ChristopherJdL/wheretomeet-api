@@ -200,7 +200,7 @@ req.put("types", participants);
 Returns code `200` (OK) or 204 (No Content).
 Returns the Perfect Place.
 
-> :warning: ✋🏽 The Request can return code 204 if nothing was found. In this case, an error message should be displayed.
+> :warning: :raised_hand: The Request can return code 204 if nothing was found. In this case, an error message should be displayed.
 
 ```json
 {
