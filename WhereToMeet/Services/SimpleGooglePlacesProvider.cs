@@ -57,9 +57,10 @@ namespace WhereToMeet.Services.PlacesProviders
                 new KeyValuePair<string, string>("location", $"{latitudeString},{longitudeString}"),
                 new KeyValuePair<string, string>("radius", radiusString),
                 new KeyValuePair<string, string>("type", placeType)
+                
             });
             var queryString = await parameters.ReadAsStringAsync();
-            var response = await this.Client.GetAsync($"?location={ latitudeString},{longitudeString}&radius=500&key=" + keykey);
+            var response = await this.Client.GetAsync($"?{queryString}");
             if (response.IsSuccessStatusCode)
             {
                 var gPlaceTransporter = JsonConvert.DeserializeObject<GooglePlacesResponse>(await response.Content.ReadAsStringAsync());

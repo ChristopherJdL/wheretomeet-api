@@ -50,7 +50,7 @@ namespace WhereToMeet.Algorithm
                 Radius = 500
             });
             if (foundPlaces.Any())
-                return foundPlaces.First();
+                return foundPlaces.Last();
             return null;
         }
 

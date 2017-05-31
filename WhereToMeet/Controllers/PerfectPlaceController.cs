@@ -7,6 +7,7 @@ using WhereToMeet.Transporters;
 using WhereToMeet.Algorithm;
 using WhereToMeet.Services;
 using WhereToMeet.Services.PlacesProviders;
+using WhereToMeet.Database;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,12 +19,14 @@ namespace WhereToMeet.Controllers
         public PerfectPlaceAlgorithm Algo { get; set; }
         public IDistanceResolver DistanceResolver { get; protected set; }
         public IPlacesProvider PlacesProvider { get; protected set; }
+        public ProgramDbContext DbContext { get; private set; }
 
-        public PerfectPlaceController(IDistanceResolver distanceResolver, IPlacesProvider placesProvider)
+        public PerfectPlaceController(IDistanceResolver distanceResolver, IPlacesProvider placesProvider, ProgramDbContext dbContext)
         {
             this.DistanceResolver = distanceResolver;
             this.PlacesProvider = placesProvider;
             this.Algo = new PerfectPlaceAlgorithm();
+            this.DbContext = dbContext;
         }
         public class PerfectPlaceQueryWrapper
         {
@@ -32,33 +35,22 @@ namespace WhereToMeet.Controllers
         }
         // GET: api/values
 
-        GeoCoordinatesTransporter[] GetParticipantsCoordinates(int[] ParticipantsIds)
+        IEnumerable<GeoCoordinatesTransporter> GetParticipantsCoordinates(int[] participantsIds)
         {
-            return new GeoCoordinatesTransporter [] 
-            {
-                new GeoCoordinatesTransporter()
-                {
-                    Y =  37.532600,
-                    X = 127.024612
-                },
-                new GeoCoordinatesTransporter()
-                {
-                    Y = 37.5588440,
-                    X = 126.9198570
-                },
-
-                new GeoCoordinatesTransporter()
-                {
-                    Y = 37.5593203,
-                    X = 126.9229898
-                }
-            };
+            var friendsGeoData = participantsIds.Select(id => this.DbContext.Users.Where(user => user.Id == id)
+            .Select(user => new GeoCoordinatesTransporter() {
+                X = user.LastKnownLongitude, Y = user.LastKnownLatitude
+            }).FirstOrDefault());
+            return friendsGeoData;
         }
         [HttpGet]
         public async Task<IActionResult> Get(PerfectPlaceQueryWrapper perfectPlaceQuery)
         {
+            var participantsGeoCoordinates = this.GetParticipantsCoordinates(perfectPlaceQuery.Participants);
+            if (participantsGeoCoordinates == null || !participantsGeoCoordinates.Any() || participantsGeoCoordinates.Contains(null))
+                return BadRequest("Bad request. Some of the user Ids provided do not correspond to anybody in the Database.");
             var perfectPlace = await this.Algo.FindPerfectPlace(this.PlacesProvider, perfectPlaceQuery.Types,
-                this.DistanceResolver, this.GetParticipantsCoordinates(perfectPlaceQuery.Participants));
+                this.DistanceResolver, participantsGeoCoordinates.ToArray());
             return Ok(perfectPlace);
         }
     }

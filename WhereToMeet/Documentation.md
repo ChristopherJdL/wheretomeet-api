@@ -121,9 +121,7 @@ The return value is a list of string values.
 Undefined behaviour.
 
 
-## :warning: Location (To inform the server on the user's location) ##
-
-> :warning: Not working nor deployed yet. :rabbit:
+## Location (To inform the server on the user's location) ##
 
 ### Authentication
 This route uses [the authentication process described here](#milky_way-usage-of-the-token-smile).
@@ -151,6 +149,129 @@ The parameters are required:
 
 Returns code `200` (OK).
 No return value.
+
+#### If failure :-1:  : ####
+
+Returns code `400` (Bad Request).
+
+
+
+
+## Perfect Place ##
+
+### Authentication
+This route uses [the authentication process described here](#milky_way-usage-of-the-token-smile).
+
+### Query :information_desk_person: ###
+Get the Perfect Place using:
+
+| *Route*  | `/api/perfectplace` |
+|----------|---------------------|
+| *Method* | GET                 |
+
+To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/perfectplace"`.
+
+The parameters are required:
+
+| *Parameter name*|  *Explanation*                                                                |
+|-----------------|-------------------------------------------------------------------------------|
+| types           | Array of the place types. This array contains strings.                        |
+| participants    | Array of the Friends Ids of the new group. This array contains integers.	  |
+
+#### How to add array as parameters with Loopj Async Http
+
+Use [this function of the library](https://loopj.com/android-async-http/doc/com/loopj/android/http/RequestParams.html#put-java.lang.String-java.lang.Object-).
+
+Example:
+```java
+ArrayList<int> participants = new ArrayList<int>();
+participants.add(123);
+participants.add(13);
+participants.add(91600);
+RequestParams req = new RequestParams();
+
+req.put("types", participants);
+
+```
+
+### Return value :heart_eyes_cat: ###
+#### If success :+1: : ####
+
+Returns code `200` (OK) or 204 (No Content).
+Returns the Perfect Place.
+
+> :warning: ✋🏽 The Request can return code 204 if nothing was found. In this case, an error message should be displayed.
+
+```json
+{
+  "name": "바오밥홍대본점",
+  "latitude": 126.9226642,
+  "longitude": 37.5492454,
+  "tags": [
+    "bar",
+    "point_of_interest",
+    "establishment"
+  ]
+}
+```
+
+#### If failure :-1:  : ####
+
+Returns code `400` (Bad Request).
+
+## Friends ##
+
+### Authentication
+This route uses [the authentication process described here](#milky_way-usage-of-the-token-smile).
+
+### Query :information_desk_person: ###
+Get the Friends using:
+
+| *Route*  | `/api/friends`      |
+|----------|---------------------|
+| *Method* | GET                 |
+
+To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/friends"`.
+
+No parameters are required.
+
+### Return value :heart_eyes_cat: ###
+#### If success :+1: : ####
+
+Returns code `200` (OK).
+
+```json
+[
+  {
+    "id": 26,
+    "username": "RoHi",
+    "email": "rohi@naver.com",
+    "lastKnownY": 37.5522255,
+    "lastKnownX": 126.9233862
+  },
+  {
+    "id": 27,
+    "username": "InSeo",
+    "email": "inseo@naver.com",
+    "lastKnownY": 38.3547149,
+    "lastKnownX": 125.4809314
+  },
+  {
+    "id": 28,
+    "username": "JungHeum",
+    "email": "jungheum@naver.com",
+    "lastKnownY": 37.5156865,
+    "lastKnownX": 126.9960697
+  },
+  {
+    "id": 29,
+    "username": "YongHan",
+    "email": "yonghan@naver.com",
+    "lastKnownY": 37.538427037,
+    "lastKnownX": 126.9654440126
+  }
+]
+```
 
 #### If failure :-1:  : ####
 

@@ -20,11 +20,21 @@ namespace WhereToMeet.Controllers
         {
             this.dbContext = dbContext;
         }
+
         [HttpGet]
         [Authorize]
         public IActionResult Get()
         {
-            var friendsOfThisUser = this.dbContext.Friendships.Where(f => f.UserId == this.User.GetUserId()).Include(f => f.Friend).Select(u => u.Friend);
+            var friendsOfThisUser = this.dbContext.Friendships
+                .Where(f => f.UserId == this.User.GetUserId()).Include(f => f.Friend)
+                .Select(u => new
+                {
+                    Id = u.Friend.Id,
+                    Username = u.Friend.Username,
+                    Email = u.Friend.Email,
+                    lastKnownY = u.Friend.LastKnownLatitude,
+                    lastKnownX = u.Friend.LastKnownLongitude
+                });
             return new OkObjectResult(friendsOfThisUser);
         }
 

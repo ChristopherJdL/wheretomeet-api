@@ -30,7 +30,7 @@ namespace WhereToMeet.Controllers
 
             if (rdw == null || string.IsNullOrEmpty(rdw.Password) ||
                 string.IsNullOrEmpty(rdw.Email) || string.IsNullOrEmpty(rdw.Username))
-                return BadRequest("Malformed request parameters. Is one of them empty ?");
+                return BadRequest("Malformed or empty Log In information.");
             if (!this.dbContext.Users.Where(u => u.Email == rdw.Email).Any())
             {
                 dbContext.Add<User>(new User
@@ -43,7 +43,7 @@ namespace WhereToMeet.Controllers
                 return Ok();
             }
             else
-                return BadRequest("User already added in model.");
+                return BadRequest("User already added.");
         }
     }
 }
