@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,18 +40,29 @@ namespace WhereToMeet.Algorithm
         //    };
         //}
 
+<<<<<<< Updated upstream
         public async Task<PlaceTransporter> DefaultBehaviour(GeoCoordinatesTransporter[] geoCoordinates, IPlacesProvider placesProvider, IEnumerable<string> placesTypes)
+=======
+        public async Task<PlaceTransporter> DefaultBehaviour(GeoCoordinatesTransporter[] geoCoordinates, IPlacesProvider placesProvider, IEnumerable<string> placesTypes, int radius)
+>>>>>>> Stashed changes
         {
             var foundPlaces = await placesProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter()
             {
                 Latitude = geoCoordinates.First().Y,
                 Longitude = geoCoordinates.First().X,
                 PlacesTypes = placesTypes,
+<<<<<<< Updated upstream
                 Radius = 500
             });
             if (foundPlaces.Any())
                 return foundPlaces.Last();
             return null;
+=======
+                Radius = this.radius
+            });
+            if(this.radius == 2000) return (foundPlaces.Any() ? foundPlaces.First() : null);
+            if(foundPlaces.Any()) return await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes, 1000);
+>>>>>>> Stashed changes
         }
 
         public async Task<PlaceTransporter> FindPerfectPlace(IPlacesProvider placesProvider, String[] placesTypes,
@@ -99,7 +110,11 @@ namespace WhereToMeet.Algorithm
                 }
             }
             if (finalPlace == null)
+<<<<<<< Updated upstream
                 finalPlace = await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes);
+=======
+                finalPlace = await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes, 1000);
+>>>>>>> Stashed changes
             return finalPlace;
         }
     }
