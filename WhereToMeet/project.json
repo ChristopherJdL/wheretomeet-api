@@ -22,7 +22,10 @@
     "Newtonsoft.Json": "9.0.1",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
-    "Microsoft.AspNetCore.StaticFiles": "1.1.0"
+    "Microsoft.AspNetCore.StaticFiles": "1.1.0",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.AspNetCore.TestHost": "1.0.0"
   },
 
   "tools": {
@@ -50,7 +53,7 @@
       "System.GC.Server": true
     }
   },
-
+  "testRunner": "xunit",
   "publishOptions": {
     "include": [
       "wwwroot",
