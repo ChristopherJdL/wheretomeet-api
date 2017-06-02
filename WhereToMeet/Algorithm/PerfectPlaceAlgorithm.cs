@@ -49,7 +49,7 @@ namespace WhereToMeet.Algorithm
                 PlacesTypes = placesTypes,
                 Radius = this.radius
             });
-            if(this.radius == 10000) return (foundPlaces.Any() ? foundPlaces.First() : null);
+            if(this.radius == 50000) return (foundPlaces.Any() ? foundPlaces.First() : null);
             if(foundPlaces.Any()) return await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes, this.radius+1000);
         }
 
