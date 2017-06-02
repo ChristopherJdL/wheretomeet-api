@@ -47,14 +47,12 @@ namespace WhereToMeet.Algorithm
                 Latitude = geoCoordinates.First().Y,
                 Longitude = geoCoordinates.First().X,
                 PlacesTypes = placesTypes,
-                Radius = this.radius
+                Radius = radius
             });
-            if(this.radius == 50000) return (foundPlaces.Any() ? foundPlaces.First() : null);
-            if(foundPlaces.Any()) return await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes, this.radius+1000);
+            return foundPlaces.Last();
         }
 
-        public async Task<PlaceTransporter> FindPerfectPlace(IPlacesProvider placesProvider, String[] placesTypes,
-            IDistanceResolver distanceResolver, GeoCoordinatesTransporter[] geoCoordinates)
+        public GeoCoordinatesTransporter GetAverageLocation(GeoCoordinatesTransporter[] geoCoordinates)
         {
             double sumX = 0.0, sumY = 0.0, sumZ = 0.0;
             foreach (GeoCoordinatesTransporter item in geoCoordinates)
@@ -74,28 +72,33 @@ namespace WhereToMeet.Algorithm
             var averageCoordinates = new GeoCoordinatesTransporter();
             averageCoordinates.X = Math.Acos(averageZ / r) * 180 / Math.PI;
             averageCoordinates.Y = Math.Acos(averageX / averageY) * 180 / Math.PI;
-            
+            return averageCoordinates;
+        }
+
+        public async Task<PlaceTransporter> FindPerfectPlace(IPlacesProvider placesProvider, String[] placesTypes,
+            IDistanceResolver distanceResolver, GeoCoordinatesTransporter[] geoCoordinates, GeoCoordinatesTransporter leaderCoordinates)
+        {
+            var averageCoordinates = this.GetAverageLocation(geoCoordinates);
             var candidatePlaces = await placesProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter
                                                                                                    {
-                                                                                                     Latitude = averageCoordinates.Y,
-                                                                                                     Longitude = averageCoordinates.X,
-                                                                                                     Radius = 1000,
+                                                                                                     Latitude = leaderCoordinates.Y,
+                                                                                                     Longitude = leaderCoordinates.X,
+                                                                                                     Radius = 10000,
                                                                                                      PlacesTypes = placesTypes
                                                                                                    });
-            int minimumMinute = 0;
+            if (candidatePlaces.Count() == 0)
+                return null;
             PlaceTransporter finalPlace = null;
-            foreach (var item1 in candidatePlaces.Take(5))
+            var initialDifference = new GeoCoordinatesTransporter() { Y = candidatePlaces.ElementAt(0).Latitude - averageCoordinates.Y, X = candidatePlaces.ElementAt(0).Longitude - averageCoordinates.X };
+            
+            for (int i = 0; i < candidatePlaces.Count(); i++)
             {
-                int minute = 0;
-                foreach (GeoCoordinatesTransporter item2 in geoCoordinates)
-                {
-                    minute += (await distanceResolver.ResolveDuration(new GeoCoordinatesTransporter() { X = item1.Longitude, Y = item1.Latitude } , item2) / 60);
-                }
-                if (finalPlace == null || minimumMinute < minute)
-                {
-                    minimumMinute = minute;
-                    finalPlace = item1;
-                }
+                var candidatePlace = candidatePlaces.ElementAt(i);
+                double differenceLatitude = Math.Abs(candidatePlace.Latitude - averageCoordinates.Y);
+                double differenceLongitude = Math.Abs(candidatePlace.Longitude - averageCoordinates.X);
+                double differenceBoth = differenceLatitude + differenceLongitude;
+                if (differenceBoth < Math.Abs(initialDifference.Y + initialDifference.X))
+                    finalPlace = candidatePlace;
             }
             if (finalPlace == null)
                 finalPlace = await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes, 1000);

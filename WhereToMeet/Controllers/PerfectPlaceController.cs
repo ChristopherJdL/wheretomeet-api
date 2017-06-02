@@ -50,10 +50,15 @@ namespace WhereToMeet.Controllers
         public async Task<IActionResult> Get(PerfectPlaceQueryWrapper perfectPlaceQuery)
         {
             var participantsGeoCoordinates = this.GetParticipantsCoordinates(perfectPlaceQuery.Participants);
+            var leaderCoordinates = this.DbContext.Users.Where(user => user.Id == this.User.GetUserId())
+                .Select( user => new GeoCoordinatesTransporter() {
+                    Y =  user.LastKnownLatitude,
+                    X = user.LastKnownLongitude
+                }).First();
             if (participantsGeoCoordinates == null || !participantsGeoCoordinates.Any() || participantsGeoCoordinates.Contains(null))
                 return BadRequest("Bad request. Some of the user Ids provided do not correspond to anybody in the Database.");
             var perfectPlace = await this.Algo.FindPerfectPlace(this.PlacesProvider, perfectPlaceQuery.Types,
-                this.DistanceResolver, participantsGeoCoordinates.ToArray());
+                this.DistanceResolver, participantsGeoCoordinates.ToArray(), leaderCoordinates);
             return Ok(perfectPlace);
         }
     }
