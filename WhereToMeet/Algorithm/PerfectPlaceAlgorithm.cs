@@ -54,24 +54,16 @@ namespace WhereToMeet.Algorithm
 
         public GeoCoordinatesTransporter GetAverageLocation(GeoCoordinatesTransporter[] geoCoordinates)
         {
-            double sumX = 0.0, sumY = 0.0, sumZ = 0.0;
+            double sumX = 0.0, sumY = 0.0;
             foreach (GeoCoordinatesTransporter item in geoCoordinates)
             {
-                double x = Math.Sin(item.X * Math.PI / 180) * Math.Cos(item.Y * Math.PI / 180);
-                double y = Math.Sin(item.X * Math.PI / 180) * Math.Sin(item.Y * Math.PI / 180);
-                double z = Math.Cos(item.X * Math.PI / 180);
-                sumX += x;
-                sumY += y;
-                sumZ += z;
+                sumX += item.X;
+                sumY += item.Y;
             }
-            double averageX = sumX / geoCoordinates.Length;
-            double averageY = sumY / geoCoordinates.Length;
-            double averageZ = sumZ / geoCoordinates.Length;
-            double r = Math.Sqrt(averageX * averageX + averageY * averageY + averageZ * averageZ);
 
             var averageCoordinates = new GeoCoordinatesTransporter();
-            averageCoordinates.X = Math.Acos(averageZ / r) * 180 / Math.PI;
-            averageCoordinates.Y = Math.Acos(averageX / averageY) * 180 / Math.PI;
+            averageCoordinates.X = sumX / geoCoordinates.Length;
+            averageCoordinates.Y = sumY / geoCoordinates.Length;
             return averageCoordinates;
         }
 
@@ -81,27 +73,30 @@ namespace WhereToMeet.Algorithm
             var averageCoordinates = this.GetAverageLocation(geoCoordinates);
             var candidatePlaces = await placesProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter
                                                                                                    {
-                                                                                                     Latitude = leaderCoordinates.Y,
-                                                                                                     Longitude = leaderCoordinates.X,
-                                                                                                     Radius = 10000,
+                                                                                                     Latitude = averageCoordinates.Y,
+                                                                                                     Longitude = averageCoordinates.X,
+                                                                                                     Radius = 5000,
                                                                                                      PlacesTypes = placesTypes
                                                                                                    });
             if (candidatePlaces.Count() == 0)
                 return null;
+            int minimumMinute = 0;
             PlaceTransporter finalPlace = null;
-            var initialDifference = new GeoCoordinatesTransporter() { Y = candidatePlaces.ElementAt(0).Latitude - averageCoordinates.Y, X = candidatePlaces.ElementAt(0).Longitude - averageCoordinates.X };
-            
-            for (int i = 0; i < candidatePlaces.Count(); i++)
+            foreach (var item1 in candidatePlaces.Take(5))
             {
-                var candidatePlace = candidatePlaces.ElementAt(i);
-                double differenceLatitude = Math.Abs(candidatePlace.Latitude - averageCoordinates.Y);
-                double differenceLongitude = Math.Abs(candidatePlace.Longitude - averageCoordinates.X);
-                double differenceBoth = differenceLatitude + differenceLongitude;
-                if (differenceBoth < Math.Abs(initialDifference.Y + initialDifference.X))
-                    finalPlace = candidatePlace;
+                int minute = 0;
+                foreach (GeoCoordinatesTransporter item2 in geoCoordinates)
+                {
+                    minute += (await distanceResolver.ResolveDuration(new GeoCoordinatesTransporter() { X = item1.Longitude, Y = item1.Latitude }, item2) / 60);
+                }
+                if (finalPlace == null || minimumMinute < minute)
+                {
+                    minimumMinute = minute;
+                    finalPlace = item1;
+                }
             }
-            if (finalPlace == null)
-                finalPlace = await this.DefaultBehaviour(geoCoordinates, placesProvider, placesTypes, 1000);
+
+
             return finalPlace;
         }
     }

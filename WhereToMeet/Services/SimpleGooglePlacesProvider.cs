@@ -61,8 +61,8 @@ namespace WhereToMeet.Services.PlacesProviders
 
         private async Task<GooglePlacesResponse> FireGooglePlacesQueryAsync(string placeType, PlacesQueryTransporter query)
         {
-            string latitudeString = query.Latitude.ToString(CultureInfo.InvariantCulture);
-            string longitudeString = query.Longitude.ToString(CultureInfo.InvariantCulture);
+            string latitudeString = query.Latitude.ToString("N4", CultureInfo.InvariantCulture);
+            string longitudeString = query.Longitude.ToString("N4", CultureInfo.InvariantCulture);
             var keykey = Configuration["GoogleServices:GoogleServicesKey"];
             string radiusString = query.Radius.ToString();
             var parameters = new FormUrlEncodedContent(new[]
