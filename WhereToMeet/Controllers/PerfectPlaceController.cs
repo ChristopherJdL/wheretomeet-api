@@ -39,10 +39,19 @@ namespace WhereToMeet.Controllers
 
         IEnumerable<GeoCoordinatesTransporter> GetParticipantsCoordinates(int[] participantsIds)
         {
-            var friendsGeoData = participantsIds.Select(id => this.DbContext.Users.Where(user => user.Id == id || user.Id == this.User.GetUserId())
+            var friendsGeoData = participantsIds.Select(id => this.DbContext.Users.Where(user => user.Id == id)
             .Select(user => new GeoCoordinatesTransporter() {
-                X = user.LastKnownLongitude, Y = user.LastKnownLatitude
-            }).FirstOrDefault());
+                X = user.LastKnownLongitude,
+
+                Y = user.LastKnownLatitude
+            }).FirstOrDefault()).ToList();
+            var leaderCoordinates = this.DbContext.Users.Where(user => user.Id == this.User.GetUserId())
+            .Select(user => new GeoCoordinatesTransporter()
+                {
+                    Y = user.LastKnownLatitude,
+                     X = user.LastKnownLongitude
+                }).First();
+            friendsGeoData.Add(leaderCoordinates);
             return friendsGeoData;
         }
         [HttpGet]
