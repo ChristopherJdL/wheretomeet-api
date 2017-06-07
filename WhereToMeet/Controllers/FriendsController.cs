@@ -21,9 +21,7 @@ namespace WhereToMeet.Controllers
             this.dbContext = dbContext;
         }
 
-        [HttpGet]
-        [Authorize]
-        public IActionResult Get()
+        protected IEnumerable<dynamic> ObtainFriends()
         {
             var friendsOfThisUser = this.dbContext.Friendships
                 .Where(f => f.UserId == this.User.GetUserId()).Include(f => f.Friend)
@@ -35,14 +33,48 @@ namespace WhereToMeet.Controllers
                     lastKnownY = u.Friend.LastKnownLatitude,
                     lastKnownX = u.Friend.LastKnownLongitude
                 });
-            return new OkObjectResult(friendsOfThisUser);
+            return friendsOfThisUser;
         }
 
-        // POST Set default friends
-        [HttpPost]
-        public IActionResult Post()
+        [HttpGet]
+        [Authorize]
+        public IActionResult Get()
         {
-            return Ok();
+            return new OkObjectResult(this.ObtainFriends());
+        }
+
+        protected bool IsFriendAlreadyAdded(User friendToVerify)
+        {
+            var resultsSet = this.dbContext.Friendships
+               .Where(f => f.UserId == this.User.GetUserId() && f.FriendId == friendToVerify.Id);
+            return resultsSet.Any();
+        }
+
+        protected void AddFriend(User friendToAdd)
+        {
+
+            this.dbContext.Friendships.Add(new Friendship()
+            {
+                FriendId = friendToAdd.Id,
+                UserId = this.User.GetUserId()
+            });
+            this.dbContext.SaveChanges();
+        }
+
+        // POST: Add Friend by Username
+        [HttpPost]
+        public IActionResult Post(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return BadRequest("Username is empty.");
+            var usersHavingUsername = this.dbContext.Users.Where(u => u.Username == username);
+            if (!usersHavingUsername.Any())
+                return NoContent();
+            var friendToAdd = usersHavingUsername.First();
+            if (this.IsFriendAlreadyAdded(friendToAdd))
+                return BadRequest("Friend is already added.");
+            this.AddFriend(friendToAdd);
+            return Ok(this.ObtainFriends());
         }
     }
 }

@@ -19,28 +19,6 @@ namespace WhereToMeet.Algorithm
 
         }
 
-        //public GeoCoordinatesTransporter    ObtainAverageCoordinates(GeoCoordinatesTransporter[] geoCoordinates)
-        //{
-        //    double x = 0d;
-        //    double y = 0d;
-        //    double z = 0d;
-        //    geoCoordinates.Take(2).ToList().ForEach(g => x = x + (Math.Cos(g.Y) * Math.Cos(g.X)));
-        //    geoCoordinates.Take(2).ToList().ForEach(g => y = y + (Math.Cos(g.Y) * Math.Sin(g.X)));
-        //    geoCoordinates.Take(2).ToList().ForEach(g => z = z + (Math.Sin(g.Y)));
-        //    double N = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
-        //    double latitudeM = Math.Asin(z / N);
-        //    double longitudeM = 0;
-        //    if (x >= 0)
-        //        longitudeM = Math.Asin(y / N * Math.Cos(Math.Asin(z / N)));
-        //    else
-        //        longitudeM = Math.Sign(y) * (Math.PI - Math.Asin(Math.Abs(y) / N * Math.Cos(Math.Asin(z / N))));
-        //    return new GeoCoordinatesTransporter()
-        //    {
-        //        Y = latitudeM,
-        //        X = longitudeM
-        //    };
-        //}
-
         public async Task<PlaceTransporter> DefaultBehaviour(GeoCoordinatesTransporter[] geoCoordinates, IPlacesProvider placesProvider, IEnumerable<string> placesTypes, int radius)
         {
             var foundPlaces = await placesProvider.LookForNearbyPlacesAsync(new PlacesQueryTransporter()
@@ -68,33 +46,25 @@ namespace WhereToMeet.Algorithm
             return averageCoordinates;
         }
 
-        public static double CalcDistance(double Lat1,
-     double Long1, double Lat2, double Long2)
+        /// <summary>
+        /// The Haversine formula according to Dr. Math.  
+        ///  
+        /// http://mathforum.org/library/drmath/view/51879.html
+        ///
+        /// </summary>
+        /// <param name="LatLhs">Left hand spherical latitude coordinate.</param>
+        /// <param name="LongLhs">Left hand spherical longitude coordinate.</param>
+        /// <param name="LatRhs">Right hand spherical latitude coordinate.</param>
+        /// <param name="LongRhs">Right hand spherical longitude coordinate.</param>
+        /// <returns></returns>
+        public static double CalcDistance(double LatLhs,
+     double LongLhs, double LatRhs, double LongRhs)
         {
-            /*
-                The Haversine formula according to Dr. Math.
-                http://mathforum.org/library/drmath/view/51879.html
-
-                dlon = lon2 - lon1
-                dlat = lat2 - lat1
-                a = (sin(dlat/2))^2 + cos(lat1) * cos(lat2) * (sin(dlon/2))^2
-                c = 2 * atan2(sqrt(a), sqrt(1-a)) 
-                d = R * c
-
-                Where
-                    * dlon is the change in longitude
-                    * dlat is the change in latitude
-                    * c is the great circle distance in Radians.
-                    * R is the radius of a spherical Earth.
-                    * The locations of the two points in 
-                        spherical coordinates (longitude and 
-                        latitude) are lon1,lat1 and lon2, lat2.
-            */
             double dDistance = Double.MinValue;
-            double dLat1InRad = Lat1 * (Math.PI / 180.0);
-            double dLong1InRad = Long1 * (Math.PI / 180.0);
-            double dLat2InRad = Lat2 * (Math.PI / 180.0);
-            double dLong2InRad = Long2 * (Math.PI / 180.0);
+            double dLat1InRad = LatLhs * (Math.PI / 180.0);
+            double dLong1InRad = LongLhs * (Math.PI / 180.0);
+            double dLat2InRad = LatRhs * (Math.PI / 180.0);
+            double dLong2InRad = LongRhs * (Math.PI / 180.0);
 
             double dLongitude = dLong2InRad - dLong1InRad;
             double dLatitude = dLat2InRad - dLat1InRad;
