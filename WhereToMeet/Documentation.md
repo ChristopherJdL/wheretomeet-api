@@ -220,7 +220,7 @@ Returns the Perfect Place.
 
 Returns code `400` (Bad Request).
 
-## Friends ##
+## Friends GET ##
 
 ### Authentication
 This route uses [the authentication process described here](#milky_way-usage-of-the-token-smile).
@@ -278,3 +278,62 @@ The application returns the friends list.
 #### If failure :-1:  : ####
 
 Returns code `400` (Bad Request).
+
+
+
+## Friends POST (Add a friend by username) ##
+
+### Authentication
+This route uses [the authentication process described here](#milky_way-usage-of-the-token-smile).
+
+### Query :information_desk_person: ###
+Add a new friend using:
+
+| *Route*  | `/api/friends`      |
+|----------|---------------------|
+| *Method* | POST                |
+
+To use it, just add it to the end of the *URL_API*, just like that: `URL_API + "/api/friends"`.
+
+This request requires the following parameters:
+
+| *Parameter name*|  *Explanation*                                        |
+|-----------------|-------------------------------------------------------|
+| username        | Username of the user to be added.				      |
+
+
+### Return value :heart_eyes_cat: ###
+#### If success :+1: : ####
+
+Returns code `200` (OK).
+
+The API returns the new friends list.
+
+```json
+[
+  {
+    "id": 26,
+    "username": "RoHi",
+    "email": "rohi@naver.com",
+    "lastKnownY": 37.5522255,
+    "lastKnownX": 126.9233862
+  },
+  {
+    "id": 27,
+    "username": "InSeo",
+    "email": "inseo@naver.com",
+    "lastKnownY": 38.3547149,
+    "lastKnownX": 125.4809314
+  }
+]
+```
+
+#### If failure :-1:  : ####
+
+Returns code `400` (Bad Request). With an error message from below:
+
+| *Error messages*                                        |
+|---------------------------------------------------------|
+| `Username is empty`									  |
+| `User is not found`									  |
+| `Friend is already added.`							  |

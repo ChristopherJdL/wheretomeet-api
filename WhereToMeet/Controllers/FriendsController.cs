@@ -69,7 +69,7 @@ namespace WhereToMeet.Controllers
                 return BadRequest("Username is empty.");
             var usersHavingUsername = this.dbContext.Users.Where(u => u.Username == username);
             if (!usersHavingUsername.Any())
-                return NoContent();
+                return BadRequest("User is not found.");
             var friendToAdd = usersHavingUsername.First();
             if (this.IsFriendAlreadyAdded(friendToAdd))
                 return BadRequest("Friend is already added.");

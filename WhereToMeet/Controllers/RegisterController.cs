@@ -30,7 +30,7 @@ namespace WhereToMeet.Controllers
 
             if (rdw == null || string.IsNullOrEmpty(rdw.Password) ||
                 string.IsNullOrEmpty(rdw.Email) || string.IsNullOrEmpty(rdw.Username))
-                return BadRequest("Malformed or empty Log In information.");
+                return BadRequest("Information for registration is invalid.");
             if (!this.dbContext.Users.Where(u => u.Email == rdw.Email).Any())
             {
                 dbContext.Add<User>(new User

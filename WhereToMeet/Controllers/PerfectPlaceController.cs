@@ -40,16 +40,16 @@ namespace WhereToMeet.Controllers
         IEnumerable<GeoCoordinatesTransporter> GetParticipantsCoordinates(int[] participantsIds)
         {
             var friendsGeoData = participantsIds.Select(id => this.DbContext.Users.Where(user => user.Id == id)
-            .Select(user => new GeoCoordinatesTransporter() {
+            .Select(user => new GeoCoordinatesTransporter()
+            {
                 X = user.LastKnownLongitude,
-
                 Y = user.LastKnownLatitude
             }).FirstOrDefault()).ToList();
             var leaderCoordinates = this.DbContext.Users.Where(user => user.Id == this.User.GetUserId())
             .Select(user => new GeoCoordinatesTransporter()
                 {
                     Y = user.LastKnownLatitude,
-                     X = user.LastKnownLongitude
+                    X = user.LastKnownLongitude
                 }).First();
             friendsGeoData.Add(leaderCoordinates);
             return friendsGeoData;
@@ -60,7 +60,8 @@ namespace WhereToMeet.Controllers
         {
             var participantsGeoCoordinates = this.GetParticipantsCoordinates(perfectPlaceQuery.Participants);
             var leaderCoordinates = this.DbContext.Users.Where(user => user.Id == this.User.GetUserId())
-                .Select( user => new GeoCoordinatesTransporter() {
+                .Select( user => new GeoCoordinatesTransporter()
+                {
                     Y =  user.LastKnownLatitude,
                     X = user.LastKnownLongitude
                 }).First();
